@@ -1,8 +1,16 @@
 'use client';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Home, Gift, Sparkles, BookOpen, GraduationCap, Users, Monitor, FileQuestion, Briefcase, MessageSquare, Trophy, Target, Lightbulb, Award, Calendar, Video, UserCircle, FileText, BookMarked, PartyPopper, ChevronRight } from 'lucide-react';
+import { LucideIcon, X, Home, Gift, Sparkles, BookOpen, GraduationCap, Users, Monitor, FileQuestion, Briefcase, MessageSquare, Trophy, Target, Lightbulb, Award, Calendar, Video, UserCircle, FileText, BookMarked, PartyPopper, ChevronRight } from 'lucide-react';
 
 interface SidebarProps { isOpen: boolean; onClose: () => void }
+
+interface MenuItem {
+    icon: LucideIcon;
+    label: string;
+    href: string;
+    subtitle?: string;
+    badge?: string;
+}
 
 const menuData = {
     main: [
@@ -81,7 +89,7 @@ function SidebarHeader({ onClose }: { onClose: () => void }) {
     );
 }
 
-function MenuSection({ title, items, badge, onClose }: { title?: string; items: typeof menuData.main; badge?: string; onClose?: () => void }) {
+function MenuSection({ title, items, badge, onClose }: { title?: string; items: MenuItem[]; badge?: string; onClose?: () => void }) {
     return (
         <div className="py-4 border-b border-gray-100">
             {title && (
@@ -96,9 +104,9 @@ function MenuSection({ title, items, badge, onClose }: { title?: string; items: 
                     <item.icon className="w-5 h-5 text-gray-500 group-hover:text-gray-700" />
                     <div className="flex-1">
                         <span className="text-sm text-gray-700 group-hover:text-gray-900">{item.label}</span>
-                        {'subtitle' in item && item.subtitle && <p className="text-xs text-gray-400">{item.subtitle}</p>}
+                        {item.subtitle && <p className="text-xs text-gray-400">{item.subtitle}</p>}
                     </div>
-                    {'badge' in item && item.badge && <span className="px-2 py-0.5 bg-amber-400 text-amber-900 text-xs font-medium rounded">{item.badge}</span>}
+                    {item.badge && <span className="px-2 py-0.5 bg-amber-400 text-amber-900 text-xs font-medium rounded">{item.badge}</span>}
                 </motion.a>
             ))}
         </div>
